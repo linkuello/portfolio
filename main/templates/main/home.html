@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Фотограф на свадьбы и праздники</title>
+    <link rel="stylesheet" href="{% static 'main/style.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Услуги фотографа и оператора</h1>
+        <nav>
+            <ul class="nav-menu">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#prices">Prices</a></li>
+                <li><a href="#contacts">Contacts</a></li>
+                <li><a href="#reviews">Reviews</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="home">
+        <h2>Home</h2>
+        <p>Добро пожаловать на сайт фотографа!</p>
+    </section>
+
+    <section id="about">
+        <h2>About</h2>
+        <p>Здесь будет информация о фотографе и его опыте.</p>
+    </section>
+
+    <section id="prices">
+        <h2>Prices</h2>
+        <p>Список услуг и цены.</p>
+    </section>
+
+    <section id="contacts">
+        <h2>Contacts</h2>
+        <p>Контактная информация и форма для связи.</p>
+    </section>
+
+    <section id="reviews">
+        <h2>Reviews</h2>
+        <p>Отзывы клиентов.</p>
+    </section>
+
+    <section id="portfolio">
+        <h2>Примеры работ</h2>
+        <div class="sliders-container">
+            <!-- Первый слайдер -->
+            <div class="slider-container">
+                <div class="slider">
+                    <button class="prev">&#10094;</button>
+                    <div class="slider-images">
+                        <img src="{% static 'main/portfolio/wedding.jpg' %}" alt="Свадьба" class="slide">
+                        <img src="{% static 'main/portfolio/family.jpg' %}" alt="Семейная фотография" class="slide">
+                        <img src="{% static 'main/portfolio/lovestory.jpg' %}" alt="Love Story" class="slide">
+                    </div>
+                    <button class="next">&#10095;</button>
+                </div>
+            </div>
+    
+            <!-- Второй слайдер -->
+            <div class="slider-container">
+                <div class="slider">
+                    <button class="prev">&#10094;</button>
+                    <div class="slider-images">
+                        <img src="{% static 'main/portfolio/event1.jpg' %}" alt="Мероприятие 1" class="slide">
+                        <img src="{% static 'main/portfolio/event2.jpg' %}" alt="Мероприятие 2" class="slide">
+                        <img src="{% static 'main/portfolio/event3.jpg' %}" alt="Мероприятие 3" class="slide">
+                    </div>
+                    <button class="next">&#10095;</button>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    
+    
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="message {{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+
+    <script>
+        let currentIndex = 0;
+const slides = document.querySelectorAll('.slide');
+const totalSlides = slides.length / 2;  // Количество слайдов в одном слайдере
+
+// Функция для показа слайда в обоих слайдерах
+function showSlide(index) {
+    const allSliders = document.querySelectorAll('.slider');
+
+    allSliders.forEach(slider => {
+        const sliderImages = slider.querySelectorAll('.slide');
+        
+        sliderImages.forEach((slide, i) => {
+            slide.classList.remove('active');  // Убираем активный класс у всех слайдов
+            if (i === index) {
+                slide.classList.add('active');  // Добавляем активный класс на текущий слайд
+            }
+        });
+    });
+}
+
+// Функция для переключения слайда вправо
+function nextSlide() {
+    currentIndex = (currentIndex + 1) % totalSlides;  // Увеличиваем индекс и обнуляем, если нужно
+    showSlide(currentIndex);  // Показываем слайд
+}
+
+// Функция для переключения слайда влево
+function prevSlide() {
+    currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;  // Уменьшаем индекс с циклом
+    showSlide(currentIndex);  // Показываем слайд
+}
+
+// Автоматическое переключение слайдов
+setInterval(nextSlide, 2000);
+
+// Добавляем обработчики кликов для кнопок "prev" и "next"
+document.querySelectorAll('.next').forEach(button => {
+    button.addEventListener('click', nextSlide);
+});
+document.querySelectorAll('.prev').forEach(button => {
+    button.addEventListener('click', prevSlide);
+});
+
+// Показываем первый слайд при загрузке страницы
+showSlide(currentIndex);
+
+    </script>
+</body>
+</html>
